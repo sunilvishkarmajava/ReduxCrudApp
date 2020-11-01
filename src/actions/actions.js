@@ -1,6 +1,7 @@
 import { ADD_USER, EDIT_USER, DELETE_USER } from './types';
   
-export function addUser(data) {  
+// add user
+export const addUser = (data) => {  
     return dispatch => {  
         return dispatch({  
             type: ADD_USER,  
@@ -8,8 +9,10 @@ export function addUser(data) {
         });  
     }  
 };  
-  
-export function editUser(data) {  
+
+
+// edit user
+export const editUser = (data) => {  
     return dispatch => {  
         return dispatch({  
             type: EDIT_USER,  
@@ -18,7 +21,8 @@ export function editUser(data) {
     }  
 };  
   
-export function deleteUser(employeeId) {  
+// delete user
+export const deleteUser = (employeeId) => {  
     return dispatch => {  
         return dispatch({  
             type: DELETE_USER,  

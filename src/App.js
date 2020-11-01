@@ -1,34 +1,25 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Col,
-  Table,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from "reactstrap";
+import { Col,Table,Button,Form,FormGroup,Label,Input } from "reactstrap";
 import { addUser, editUser, deleteUser } from "./actions/actions";
 
 function App() {
   const dispatch = useDispatch();
+  const userList = useSelector((store) => store.users);
   const [User, setUser] = useState({
     name: "",
     age: "",
   });
   
-  const userList = useSelector((store) => store.users);
-
+// update the change in input field with state.
   const handleChange = (e) => {
     let tempuser = User;
     tempuser[e.target.name] = e.target.value;
     setUser({ ...tempuser });
   };
 
+  // Add and update exiting user details.
   const UpdateUserDetails = () => {
     if (!User.id) {
       const newUser = { ...User };
@@ -40,10 +31,13 @@ function App() {
     }
   };
 
+  // Detete user
   const DeleteUser = (ID) => {
     dispatch(deleteUser(ID));
+    ClearUser();
   };
 
+  // Clear the form user
   const ClearUser = () => {
     setUser({
       name: "",
@@ -51,15 +45,38 @@ function App() {
     });
   };
 
+  // Edit user.
   const EditUser = (data) => {
     setUser({ ...data });
   };
 
+  const TableRow = (user, index) => {
+        return (
+          <tr key={index}>
+            <th scope='row'>{index + 1}</th>
+            <td>{user.name}</td>
+            <td>{user.age}</td>
+            <td>
+              <Button color='info' onClick={() => EditUser(user)}>
+                Edit
+              </Button>{" "}
+              <Button
+                color='danger'
+                onClick={() => DeleteUser(user.id)}
+              >
+                Delete
+              </Button>
+            </td>
+          </tr>
+        );
+  }
+
   return (
     <div className='App'>
-      <header className='App-header'>
-        <h3>Redux Crud App.</h3>
-        <Form>
+      <section className='App-header'>
+        <h1>Redux Crud App</h1>
+        <Form className={"form-style"}>
+        <h3>Add/Update user details</h3>
           <FormGroup>
             <Col sm={{ size: 12 }}>
               <Label for='exampleEmail'>Name</Label>
@@ -82,12 +99,12 @@ function App() {
               />
             </Col>
           </FormGroup>
-          <Button onClick={UpdateUserDetails}>Submit</Button>{" "}
+          <Button color='primary' onClick={UpdateUserDetails}>Submit</Button>{" "}
           <Button color='warning' onClick={ClearUser}>
             Clear
           </Button>
         </Form>
-      </header>
+      </section>
       <section sm={6}>
         <Table bordered size={"md"}>
           <thead>
@@ -99,27 +116,9 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {userList &&
-              userList.map((user, index) => {
-                return (
-                  <tr key={index}>
-                    <th scope='row'>{index + 1}</th>
-                    <td>{user.name}</td>
-                    <td>{user.age}</td>
-                    <td>
-                      <Button color='primary' onClick={() => EditUser(user)}>
-                        Edit
-                      </Button>{" "}
-                      <Button
-                        color='danger'
-                        onClick={() => DeleteUser(user.id)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
+            {userList && userList.map((user, index) => {
+              return TableRow(user, index)
+            })}
           </tbody>
         </Table>
       </section>
