@@ -57,11 +57,12 @@ function App() {
             <td>{user.name}</td>
             <td>{user.age}</td>
             <td>
-              <Button color='info' onClick={() => EditUser(user)}>
+              <Button color='info' id="edituser" onClick={() => EditUser(user)}>
                 Edit
               </Button>{" "}
               <Button
                 color='danger'
+                id="editdelete"
                 onClick={() => DeleteUser(user.id)}
               >
                 Delete
@@ -99,14 +100,14 @@ function App() {
               />
             </Col>
           </FormGroup>
-          <Button color='primary' onClick={UpdateUserDetails}>Submit</Button>{" "}
-          <Button color='warning' onClick={ClearUser}>
+          <Button color='primary' id="SubmitUser" onClick={UpdateUserDetails}>Submit</Button>{" "}
+          <Button color='warning' id="SubmitClear" onClick={ClearUser}>
             Clear
           </Button>
         </Form>
       </section>
       <section sm={6}>
-        <Table bordered size={"md"}>
+        <Table id="tableUserList" bordered size={"md"}>
           <thead>
             <tr>
               <th>#</th>
