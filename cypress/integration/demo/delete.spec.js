@@ -3,7 +3,7 @@
 context('AutomationCrudTest', function(){
     beforeEach(() =>{
         cy.visit('http://localhost:3000/')
-    })
+    });
     it('delete test',function(){
         const currentLenOfTable = 3;
         const userObj = {
@@ -16,12 +16,12 @@ context('AutomationCrudTest', function(){
                     if($tex333.text() == userObj.name){
                         cy.get('td').eq(2).then($button => {
                             cy.get('#editdelete').click();
-                        })      
+                        });      
                     }
-                })
-            })
-        })
+                });
+            });
+        });
         cy.get('#tableUserList>tbody>tr').should('have.length', currentLenOfTable-1);
 
-    })
-})
+    });
+});
